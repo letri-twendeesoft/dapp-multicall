@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Account from "./components/Account";
+import useCorrectNetwork from "./hooks/web3/useNetwork";
+import { useWeb3 } from "./provider/web3/hook";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const { isInstallMetamask, isLoading } = useWeb3();
+  useCorrectNetwork();
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <div className="text-3xl font-bold ">
+          {!isInstallMetamask && (
+            <div className="flex flex-col justify-center items-center gap-2">
+              <p>MetaMask Wallet is not installed.</p>
+              <p>Please install MetaMask to continue. </p>
+              <a
+                href="https://microsoftedge.microsoft.com/addons/detail/metamask/ejbalbakoplchlghecdalmeeeajnimhm"
+                target="_blank"
+              >
+                You can download it from{" "}
+                <span className="text-[#F2872E] cursor-pointer">here</span>
+              </a>
+            </div>
+          )}
+        </div>
+        <Account />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
