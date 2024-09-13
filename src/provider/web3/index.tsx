@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { createWeb3State, defaultState, Web3State } from "./utils";
 import detectEthereumProvider from "@metamask/detect-provider";
-import { BrowserProvider, Eip1193Provider } from "ethers";
+import { providers } from "ethers";
 import { MetaMaskInpageProvider } from "@metamask/providers";
 
 declare global {
@@ -19,12 +19,12 @@ const Web3Provider = ({ children }: Props) => {
 
   useEffect(() => {
     async function initWeb3() {
-      const provider = (await detectEthereumProvider({
+      const provider = await detectEthereumProvider({
         mustBeMetaMask: true,
-      })) as Eip1193Provider;
+      });
 
       if (provider) {
-        const web3 = new BrowserProvider(provider);
+        const web3 = new providers.Web3Provider(provider);
         setWeb3Api(
           createWeb3State({
             isLoading: false,

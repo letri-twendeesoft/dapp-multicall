@@ -1,9 +1,9 @@
 import { MetaMaskInpageProvider } from '@metamask/providers';
-import { BrowserProvider} from 'ethers'
+import { providers } from 'ethers';
 
 
 export type Web3Dependencies = {
-    provider: BrowserProvider;
+    provider: providers.Web3Provider;
     ethereum: MetaMaskInpageProvider;
     isLoading: boolean;
     isInstallMetamask: boolean;

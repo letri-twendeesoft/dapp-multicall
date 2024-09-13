@@ -1,9 +1,13 @@
 import Account from "./components/Account";
+import TokenInfo from "./components/TokenInfo";
+import useAccount from "./hooks/web3/useAccount";
 import useCorrectNetwork from "./hooks/web3/useNetwork";
 import { useWeb3 } from "./provider/web3/hook";
 
 function App() {
   const { isInstallMetamask, isLoading } = useWeb3();
+  const { account } = useAccount();
+
   useCorrectNetwork();
   if (isLoading) {
     return <div>Loading...</div>;
@@ -27,6 +31,7 @@ function App() {
           )}
         </div>
         <Account />
+        {account && <TokenInfo />}
       </div>
     </>
   );

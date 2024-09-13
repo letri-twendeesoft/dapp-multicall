@@ -13,26 +13,18 @@ const useAccount = () => {
         queryFn: async () => {
             const accounts = await provider!.listAccounts()
 
-
             const account = accounts[0]
             if (!account) {
                 throw "Cannot retrieve account! Connect to web3 wallet"
             }
 
-            return { address: account.address }
+            return { address: account }
         },
         refetchOnWindowFocus: false,
-
     })
 
     useEffect(() => {
         ethereum?.on("accountsChanged", handleAccountsChanged);
-
-
-        return () => {
-            ethereum?.removeListener("accountsChanged", handleAccountsChanged);
-
-        };
     }, [ethereum])
 
 
@@ -47,6 +39,7 @@ const useAccount = () => {
     };
 
     const connect = async () => {
+        console.log('connect')
         try {
             await ethereum!.request({ method: 'eth_requestAccounts' })
         } catch (error) {
